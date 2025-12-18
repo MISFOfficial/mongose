@@ -2,15 +2,15 @@
 import mongoose from 'mongoose';
 import app from './app'
 
-const port: number = 5000
+const port: number = 3000
+
+
 
 
 // data base connections
 async function main() {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/test', {
-      serverSelectionTimeoutMS: 5000,
-    });
+    await mongoose.connect('mongodb+srv://mongoose:eZAztTgw0LjTJO5Y@cluster0.k2ewidf.mongodb.net/?appName=Cluster0');
     console.log('database connetion successfull')
 
     app.listen(port, () => {
@@ -19,7 +19,7 @@ async function main() {
   } catch (err) {
     console.error('MongoDB connection failed:', err instanceof Error ? err.message : err)
     console.warn('Server starting without database connection...')
-    
+
     // Start server even if DB is not connected
     app.listen(port, () => {
       console.log(`Server is runnnig at port ${port}`)
