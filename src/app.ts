@@ -1,26 +1,25 @@
-import express, { Application, Request, Response } from 'express'
-import cors from 'cors'
-import UserRouter from './app/modules/user/user.route'
+import mongoose from "mongoose";
 
-const app: Application = express()
+const express = require("express");
+const app = express();
+const port = 5000;
 
-app.use(cors())
+// data base connections
 
-// perse data
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+async function main() {
+  try {
+    await mongoose.connect("mongodb://127.0.0.1:27017/statefast");
+    console.log("Database connection successfully");
+  } catch (err) {
+    console.log("Conection Faild!", err);
+  }
+  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+}
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('server is running')
-})
-
-
-// app.post('/api/v1/user', UserRouter)
-app.use('/api/v1/user', UserRouter)
-
-
-
-
-
-export default app
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
