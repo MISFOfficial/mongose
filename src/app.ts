@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", async (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
   // inseting a test data in the mongobd
   // step 1 interface
@@ -47,20 +47,25 @@ app.get("/", async (req: Request, res: Response) => {
   // 3 creatin model using interface then the schema
   const User = model<IUser>("users", userSchema);
 
-  // 4 CREATE instance fo connect to the data base
-  const user = new User({
-    name: {
-      firstName: "Muksitul",
-      middleName: "Islam",
-      lastName: "Jahin",
-    },
-    gender: "male",
-    email: "muksitul44@gmail.com",
-    password: "123456789",
-  });
+  // create user call funtions
+  const createUserToDB = async () => {
+    // 4 CREATE instance fo connect to the data base
+    const user = new User({
+      name: {
+        firstName: "lalal",
+        middleName: "Islam",
+        lastName: "lalu",
+      },
+      gender: "male",
+      email: "muksitul44@gmail.com",
+      password: "123456789",
+    });
 
-  // now save to the data base
-  await user.save();
+    // now save to the data base
+    await user.save();
+  };
+
+  createUserToDB();
 });
 
 export default app;
